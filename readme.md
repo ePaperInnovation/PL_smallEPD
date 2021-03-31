@@ -4,8 +4,8 @@ Plastic Logic PL_smallEPD Arduino Library
 Welcome to the PL_smallEPD docs! This is a library for UC8156-based  E-Paper displays (EPD) from Plastic Logic for Adafruits GFX library. 
 
 
-![Paperino E-Paper Shield for Particle, Breakout Board and Driver Module](https://user-images.githubusercontent.com/21104467/29744828-50b878b2-8aad-11e7-8448-8b2f45289c4c.png)  
-[*Paperino E-Paper Shield for Particle, Breakout Board and Driver Module*](https://www.crowdsupply.com/robert-poser/paperino)
+!![2.1" Legio E-Paper](https://user-images.githubusercontent.com/21104467/113095639-1842a280-91f4-11eb-926a-6373e361ff16.png) 
+[*2.1" Legio E-Paper from Plastic Logic*](https://www.plasticlogic.com)
 
 ### So, what is PL_smallEPD?
 
@@ -29,16 +29,16 @@ This is the [first](https://robpo.github.io/Paperino/exampleHelloWorld/), and sh
 #include <PL_smallEPD.h>            // Generic library for UC8156-based EPDs from Plastic Logic
 #include "PL_smallLegio.h"      	// Display-specific library for 4pigment media (Legio, 6colors)
 
-#define EPD_RST     12
-#define EPD_BUSY    9
 #define EPD_CS      5  
+#define EPD_BUSY    9
+#define EPD_RST     12
 
-//PL_smallEPD(EPD_CS, EPD_RST, EPD_BUSY);			// 4 Greylevel "Lectum" EPD (2 pigment system)  -or- 
-PL_smallLegio epd(EPD_CS, EPD_RST, EPD_BUSY);   // 6 Color "Legio" EPD (4 pigment system)
+//PL_smallEPD epd(EPD_CS, EPD_RST, EPD_BUSY);	// 4 Greylevel "Lectum" EPD (2 pigment system)  -or- 
+PL_smallLEGIO epd(EPD_CS, EPD_RST, EPD_BUSY);   // 6 Color "Legio" EPD (4 pigment system)
 
 void setup() {  
     SPI.begin();                    
-    SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(6000000, MSBFIRST, SPI_MODE0));
   
     display.begin();                
     display.print("Hello World!");
