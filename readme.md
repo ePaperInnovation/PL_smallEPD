@@ -1,7 +1,7 @@
 Plastic Logic PL_smallEPD Arduino Library
 ===============================================================
 
-Welcome to the PL_smallEPD docs! This is a library for UC8156-based  E-Paper displays (EPD) from Plastic Logic for Adafruits GFX library. 
+Welcome to the `PL_smallEPD` docs! This is a library for UC8156-based  E-Paper displays (EPD) from Plastic Logic for Adafruits GFX library. 
 
 
 ![2.1" Legio E-Paper](https://user-images.githubusercontent.com/21104467/113095639-1842a280-91f4-11eb-926a-6373e361ff16.png) 
@@ -16,7 +16,7 @@ Welcome to the PL_smallEPD docs! This is a library for UC8156-based  E-Paper dis
 Please check whether you have an actual release of the Arduino IDE installed or download the latest version from [here](https://www.arduino.cc/en/Main/Software). 
 
 ### Ading Adafruit Feather nRF52840 board
-Next we will [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) Adafruit Feather nRF52840 Express board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and tools associated.
+Next please [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) Adafruit Feather nRF52840 Express board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and tools associated.
 
 ### Adding the library PL_smallEPD
 (This library is part of the Arduino **Library Manager**. Please search for `PL_smallEPD` within the Manager and download the library, that’s it!) Please download this library from Github to your local Arduino/library folder. After restarting the Arduino IDE you can find the first examples at FILE > EXAMPLES > PL_smallEPD > EXAMPLES.
@@ -52,10 +52,6 @@ void loop() {
 }
 ```
 
-
-### More…
-
-Once this example is successfully running, please have a look at the following sketches: [GFX demo](https://robpo.github.io/Paperino/exampleGFXdemo/) shows how to draw all the letters, rectangles and dots. The [Graylevel](https://robpo.github.io/Paperino/example4GLs/) sketch explains how to use the four different graylevels in your next project. [Update modes](https://robpo.github.io/Paperino/exampleUpdateMode/) describes three different ways of updating an ePaper screen.
 
 Distributors
 -------------------
