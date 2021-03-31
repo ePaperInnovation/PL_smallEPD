@@ -4,23 +4,26 @@ Plastic Logic PL_smallEPD Arduino Library
 Welcome to the PL_smallEPD docs! This is a library for UC8156-based  E-Paper displays (EPD) from Plastic Logic for Adafruits GFX library. 
 
 
-!![2.1" Legio E-Paper](https://user-images.githubusercontent.com/21104467/113095639-1842a280-91f4-11eb-926a-6373e361ff16.png) 
+![2.1" Legio E-Paper](https://user-images.githubusercontent.com/21104467/113095639-1842a280-91f4-11eb-926a-6373e361ff16.png) 
 [*2.1" Legio E-Paper from Plastic Logic*](https://www.plasticlogic.com)
 
 ### So, what is PL_smallEPD?
 
-PL-smallEPD is an easy to use Epaper library intended to be used in combination with Plastic Logics breakout-board having Adafruits Feather form-factor. The eInk-based, reflective ePaper display mimics the appearance of natural paper and is capable of holding text and images indefinitely, even without electricity. This makes this screen perfect for your next battery-driven, connected project where the display content changes rarely.
+`PL_smallEPD` is an easy to use Epaper library intended to be used in combination with Plastic Logics breakout-board having Adafruits Feather form-factor. The eInk-based, reflective ePaper display mimics the appearance of natural paper and is capable of holding text and images indefinitely, even without electricity. This makes this screen perfect for your next battery-driven, connected project where the display content changes rarely.
 
-How To Use
--------------------
+## Installation
 
-### Installation
+Please check whether you have an actual release of the Arduino IDE installed or download the latest version from [here](https://www.arduino.cc/en/Main/Software). 
 
-(This library is part of the Arduino **Library Manager**. Please search for `PL_smallEPD` within the Manager and download the library, that’s it!) Please download this library from Github to your Arduino/library folder. Included are several example sketches, they are useful to learn the basics about this ePaper screen.
+### Ading Adafruit Feather nRF52840 board
+Next we will [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) Adafruit Feather nRF52840 Express board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and tools associated.
+
+### Adding the library PL_smallEPD
+(This library is part of the Arduino **Library Manager**. Please search for `PL_smallEPD` within the Manager and download the library, that’s it!) Please download this library from Github to your local Arduino/library folder. After restarting the Arduino IDE you can find the first examples at FILE > EXAMPLES > PL_smallEPD > EXAMPLES.
 
 ### Example: Hello World!
 
-This is the [first](https://robpo.github.io/Paperino/exampleHelloWorld/), and shortest possible demo and shows how to address the ePaper:
+This is the shortest possible demo and shows how to address the ePaper:
 
 
 ```cpp
@@ -33,8 +36,8 @@ This is the [first](https://robpo.github.io/Paperino/exampleHelloWorld/), and sh
 #define EPD_BUSY    9
 #define EPD_RST     12
 
-//PL_smallEPD epd(EPD_CS, EPD_RST, EPD_BUSY);	// 4 Greylevel "Lectum" EPD (2 pigment system)  -or- 
-PL_smallLEGIO epd(EPD_CS, EPD_RST, EPD_BUSY);   // 6 Color "Legio" EPD (4 pigment system)
+//PL_smallEPD epd(EPD_CS, EPD_RST, EPD_BUSY);	// "Lectum" EPD (2 pigment system, 4 greylevels)  -or- 
+PL_smallLEGIO epd(EPD_CS, EPD_RST, EPD_BUSY);   // "Legio" EPD (4 pigment system, 6 colors)
 
 void setup() {  
     SPI.begin();                    
@@ -75,5 +78,3 @@ for more information about hook-up please check: https://github.com/plasticlogic
 Created by Robert Poser & Zhongke Dai, Mar 30th 2021, Dresden/Germany. Released under BSD license
 (3-clause BSD license), check license.md for more information.
 
-We invested time and resources providing this open source code, please support Plasticlogic 
-and open source hardware by purchasing this product @Plasticlogic
