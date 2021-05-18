@@ -16,7 +16,7 @@ Welcome to the `PL_smallEPD` docs! This is a library for UC8156-based  E-Paper d
 Please check whether you have an actual release of the **Arduino IDE** installed or download the latest version from [here](https://www.arduino.cc/en/Main/Software). 
 
 ### Adding Adafruit Feather nRF52840 board
-Next please [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) **Adafruit Feather nRF52840 Express** board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and associated tools. Finally, after connecting the board via USB, please select the newly appeared serial COM port for your device under **Tools --> Port** and you should be ready to go for flashing your own programs!
+Next please [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) the new board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and associated tools. Then please select the board **Adafruit Feather nRF52840 Express**, and after connecting the board via USB, please select the newly appeared serial COM port for your device under **Tools --> Port** and you should be ready to go for flashing your own programs!
 
 ### Adding the library Adafruit_GFX
 This library is part of the Arduino **Library Manager**. Please search for `Adafruit GFX` within the Manager and download this library.
@@ -58,7 +58,7 @@ void loop() {
 
 Distributors
 -------------------
-Legio ePaper displays are available at [Plastic Logic](https://www.plasticlogic.com/product/2-1-legio-colour-display/).
+2.1" Legio ePaper displays are available at [Plastic Logic](https://www.plasticlogic.com/product/2-1-legio-colour-display/).
 
 Projects
 -------------------
