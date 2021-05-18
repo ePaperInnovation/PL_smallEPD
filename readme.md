@@ -13,13 +13,16 @@ Welcome to the `PL_smallEPD` docs! This is a library for UC8156-based  E-Paper d
 
 ## Installation
 
-Please check whether you have an actual release of the Arduino IDE installed or download the latest version from [here](https://www.arduino.cc/en/Main/Software). 
+Please check whether you have an actual release of the **Arduino IDE** installed or download the latest version from [here](https://www.arduino.cc/en/Main/Software). 
 
-### Ading Adafruit Feather nRF52840 board
-Next please [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) Adafruit Feather nRF52840 Express board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and tools associated.
+### Adding Adafruit Feather nRF52840 board
+Next please [add](https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather/arduino-bsp-setup) **Adafruit Feather nRF52840 Express** board to the Arduino IDE: Please go to FILE > PREFERENCES and add `https://www.adafruit.com/package_adafruit_index.json` as an **Additional Board Manager URL**. After restart of the IDE please open the **Boards Manager** from the **Tools -> Board** menu and install **Adafruit nRF52 by Adafruit**. It will take a few minutes to finish installing the cross-compiling toolchain and associated tools. Finally, after connecting the board via USB, please select the newly appeared serial COM port for your device under **Tools --> Port** and you should be ready to go for flashing your own programs!
+
+### Adding the library Adafruit_GFX
+This library is part of the Arduino **Library Manager**. Please search for `Adafruit GFX` within the Manager and download this library.
 
 ### Adding the library PL_smallEPD
-(This library is part of the Arduino **Library Manager**. Please search for `PL_smallEPD` within the Manager and download the library, that’s it!) Please download this library from Github to your local Arduino/library folder. After restarting the Arduino IDE you can find the first examples at FILE > EXAMPLES > PL_smallEPD > EXAMPLES.
+Please download the library from this Github repo to your local Arduino/library folder. After restarting the Arduino IDE you can find the first examples under **File > Examples > PL_smallEPD > Examples**.
 
 ### Example: Hello World!
 
@@ -37,7 +40,7 @@ This is the shortest possible demo and shows how to address the ePaper:
 #define EPD_RST     12
 
 //PL_smallEPD epd(EPD_CS, EPD_RST, EPD_BUSY);	// "Lectum" EPD (2 pigment system, 4 greylevels)  -or- 
-PL_smallLEGIO epd(EPD_CS, EPD_RST, EPD_BUSY);   // "Legio" EPD (4 pigment system, 6 colors)
+PL_smallLegio epd(EPD_CS, EPD_RST, EPD_BUSY);   // "Legio" EPD (4 pigment system, 6 colors)
 
 void setup() {  
     SPI.begin();                    
@@ -55,7 +58,7 @@ void loop() {
 
 Distributors
 -------------------
-Legio ePaper displays are available at [Plastic Logic](https://www.plasticlogic.com/product/2-1-legio-colour-display/), 
+Legio ePaper displays are available at [Plastic Logic](https://www.plasticlogic.com/product/2-1-legio-colour-display/).
 
 Projects
 -------------------
@@ -71,6 +74,6 @@ PL_smallEPD - A library for 1.1”, 1.4", 2.1" and 3.1" E-Paper displays (EPDs) 
 based on UC8156 driver IC for Adafruit GFX core library. The communication is SPI-based, 
 for more information about hook-up please check: https://github.com/plasticlogic/PL_smallEPD.
 
-Created by Robert Poser & Zhongke Dai, Mar 30th 2021, Dresden/Germany. Released under BSD license
+Created by Zhongke Dai & Robert Poser, Mar 30th 2021, Dresden/Germany. Released under BSD license
 (3-clause BSD license), check license.md for more information.
 
