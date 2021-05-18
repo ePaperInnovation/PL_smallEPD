@@ -4,7 +4,7 @@ Example 05_ShowImage
 In this example we will learn how to upload and show our first own picture on the 2.1" Legio Epaper screen.
 
 ### Preparing a picture
-With the program of your choice (e.g. [GIMP](https://www.gimp.org)), please prepare and save your own custom picture with the following conditions:
+With the program of your choice (e.g. [GIMP](https://www.gimp.org)), please prepare and save a custom picture with the following conditions:
 - Resolution: 240 x 146 pixels
 - RGB color space (Red/Green/Blue): Red (255/0/0), Green (0/255/0), Yellow (255/255/0), Blue (0/0/255), Black (0/0/0), White(255/255/255)
 - File format: PNG or BMP
