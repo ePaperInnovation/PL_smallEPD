@@ -10,7 +10,7 @@ With the program of your choice (e.g. [GIMP](https://www.gimp.org)), please prep
 - File format: PNG or BMP
 
 ### Converting the picture to a bytestream - PLImageConverter
-Next we will convert the previously created picture to a bytestream in a .h-File, which can be directly added to the microntroller project. 
+Next we will convert the previously created picture to a bytestream in a .h-File, which can be directly added to the microcontroller project. 
 
 Please open the file in the [PLImageConverter tool ](https://www.plasticlogic.com/wp-content/uploads/SupportFiles/PLImageConverter.zip) and copy the newly created .h-File to your Arduino project folder.
 
