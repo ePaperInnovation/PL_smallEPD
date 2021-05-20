@@ -18,7 +18,7 @@ Please open the file in the [PLImageConverter tool ](https://www.plasticlogic.co
 Now please open the sketch **File > Examples > PL_smallEPD > Examples > 05_ShowImage** and add the name of your just added .h-File to the include section.
 
 ```cpp
-#include "pic_name_xyz.h"            // Imported image (as bytestream) from PL Image Inverter tool 
+#include "IMG_addyournamehere.h"            // Imported image (as bytestream) from PL Image Inverter tool 
 ```
 
 That's it, after compiling and upload the new sketch you should see the picture on the screen.
