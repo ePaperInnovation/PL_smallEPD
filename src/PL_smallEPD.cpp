@@ -8,8 +8,19 @@ Created by Robert Poser, Mar 30th 2021, Dresden/Germany. Released under BSD lice
 
 We invested time and resources providing this open source code, please support Plasticlogic 
 and open source hardware by purchasing this product @Plasticlogic
-***************************************************************************************** */
+***************************************************************************************** */ 
 #include "PL_smallEPD.h"
+
+
+
+int waveformType1_buffer[120]= {
+                                      104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,17,17,17,17,17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+int waveformType2_buffer[120] = {
+                                      105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,105,105,105,105,40,40,40,40,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49,49
+    };
+
+
 
 PL_smallEPD::PL_smallEPD(int8_t _cs, int8_t _rst, int8_t _busy) : Adafruit_GFX(EPD_WIDTH, 
 EPD_HEIGHT) {
@@ -44,12 +55,15 @@ void PL_smallEPD::begin(int8_t BGcolor) {
 
     _EPDsize=getEPDsize();                                  //Read NVM to determine display size
     switch (_EPDsize) {
-/*        case 11:
-            _width=72; _height=148; nextline= _width/4; _buffersize=_width*_height/4;
-            width=148; height=72;
+        case 11:
+           // _width=72; _height=148; nextline= _width/4; _buffersize=_width*_height/4;
+           _width=70; _height=148; nextline= _width/4; _buffersize=_width*_height/4;
+            width=148; height=70;
             writeRegister(EPD_PANELSETTING, 0x12, -1, -1, -1);        
-            writeRegister(EPD_WRITEPXRECTSET, 0, 71, 0, 147);
+            writeRegister(EPD_WRITEPXRECTSET, 0, 0x45, 0, 0x93);
             writeRegister(EPD_VCOMCONFIG, 0x00, 0x00, 0x24, 0x07);
+            writeRegister(EPD_PIXELACESSPOS, 0, 0x93, -1, -1); 
+            writeRegister(EPD_DATENTRYMODE, 0x02, -1, -1, -1); 
             break;
         case 14:
             _width=100; _height=180; nextline= _width/4; _buffersize=_width*_height/4;
@@ -57,23 +71,32 @@ void PL_smallEPD::begin(int8_t BGcolor) {
             writeRegister(EPD_PANELSETTING, 0x12, -1, -1, -1);        
             writeRegister(EPD_WRITEPXRECTSET, 0, 0xB3, 0x3C, 0x9F);
             writeRegister(EPD_VCOMCONFIG, 0x00, 0x00, 0x24, 0x07);
+             writeRegister(EPD_PIXELACESSPOS, 0, 0x9f, -1, -1); 
+                    setRotation(1);  
             break;
-  */      case 21:
+      case 21:
             _width=146; _height=240; nextline= _width/4; _buffersize=_width*_height/4;
             width=240; height=146;
             writeRegister(EPD_PANELSETTING, 0x10, -1, -1, -1);        
             writeRegister(EPD_WRITEPXRECTSET, 0, 239, 0, 145);  //147?
             //writeRegister(EPD_VCOMCONFIG, 0x00, 0x00, 0x24, 0x07);
             writeRegister(EPD_VCOMCONFIG, 0x00, 0x00, 0x24, 0x05);
-
+            writeRegister(EPD_PIXELACESSPOS, 0, 0, -1, -1); 
+            writeRegister(EPD_DATENTRYMODE, 0x20, -1, -1, -1);  
+                setRotation(1);  
             break;
-  /*      case 31:
-            _width=76; _height=312; nextline= _width/4; _buffersize=_width*_height/4;
-            width=312; height=76;
+      case 31:
+            //_width=74; _height=312; nextline= _width/4; _buffersize=_width*_height/4;
+            _width=148; _height=156; nextline= _width/4; _buffersize=_width*_height/4;
+            width=312; height=74;
             writeRegister(EPD_PANELSETTING, 0x12, -1, -1, -1);        
-            writeRegister(EPD_WRITEPXRECTSET, 0, 0x97, 0, 0x9b);  
+           // writeRegister(EPD_WRITEPXRECTSET, 0, 0x97, 0, 0x9b);    // original of Arduino 
+            writeRegister(EPD_WRITEPXRECTSET, 0, 0x93, 0, 0x9b);    // setting from MSP430     0,147,0, 155
             writeRegister(EPD_VCOMCONFIG, 0x50, 0x01, 0x24, 0x07);
-  */  }
+            writeRegister(EPD_PIXELACESSPOS, 0, 0x9b, -1, -1); 
+             writeRegister(EPD_DATENTRYMODE, 0x22, -1, -1, -1);        // important for S031
+            //writeRegister(EPD_PIXELACESSPOS, 0, 0, -1, -1); 
+   }
    // writeRegister(0x1B, 0xA7, 0x04, -1, -1);
     writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0xff, -1, -1);
     writeRegister(EPD_BORDERSETTING, 0x04, -1, -1, -1);
@@ -81,7 +104,7 @@ void PL_smallEPD::begin(int8_t BGcolor) {
     writeRegister(EPD_INTTEMPERATURE, 0x0A, -1, -1, -1);
     writeRegister(EPD_BOOSTSETTING, 0x22, 0x17, -1, -1);
 
-    setRotation(1);                             //Set landscape mode as default
+                           //Set landscape mode as default
     clearScreen(BGcolor);                   //Start with a white refresh if TRUE
     setTextColor(EPD_BLACK);                    //Set text color to black as default
 }
@@ -217,21 +240,62 @@ void PL_smallEPD::updateLectum(int updateMode, bool manPow) {
     writeBuffer();
     if (!manPow) 
         powerOn();
+ 
+
     switch (updateMode) {
-        case 0:
+        case EPD_UPD_FULL:
             writeRegister(EPD_PROGRAMMTP, 0x00, -1, -1, -1);
             writeRegister(EPD_DISPLAYENGINE, 0x03, -1, -1, -1);
             waitForBusyInactive();
             break;
-        case 1:
+        case EPD_UPD_PART:
             writeRegister(EPD_PROGRAMMTP, 0x00, -1, -1, -1);
             writeRegister(EPD_DISPLAYENGINE, 0x03, -1, -1, -1);
             waitForBusyInactive();
             break;
-        case 2:
+        case EPD_UPD_MONO:
             writeRegister(EPD_PROGRAMMTP, 0x02, -1, -1, -1);
             writeRegister(EPD_DISPLAYENGINE, 0x03, -1, -1, -1);
             waitForBusyInactive();
+            break;
+
+        case EPD_UPD_4GL_FULL:                      // Greyscale Full update, 4GL
+           // writeRegister(EPD_PROGRAMMTP, 0x00, -1, -1, -1);
+            writeRegister(EPD_DISPLAYENGINE, 0x01, -1, -1, -1);  // 0x00: Waveform from int array, 0x02: Waveform from MCU 
+            waitForBusyInactive();                           
+            break;
+
+        case EPD_UPD_4GL_PART:                      // Greyscale Partial update, 4GL
+            writeRegister(EPD_PROGRAMMTP, 0x00, -1, -1, -1);
+            writeRegister(EPD_DISPLAYENGINE, 0x07, -1, -1, -1);
+            waitForBusyInactive();                    
+           
+            break;
+
+        case EPD_UPD_2GL_FULL:                      // Greyscale Full update, 2GL
+            
+            writeRegister(EPD_PROGRAMMTP, 0x02, -1, -1, -1);
+            writeRegister(EPD_DISPLAYENGINE, 0x03, -1, -1, -1);
+            waitForBusyInactive();
+            
+            break;
+        case EPD_UPD_2GL_PART:                      // Greyscale Partial update, 4GL
+            writeRegister(EPD_PROGRAMMTP, 0x02, -1, -1, -1);
+            writeRegister(EPD_DISPLAYENGINE, 0x07, -1, -1, -1);
+            waitForBusyInactive();
+           
+            break;
+
+        // case EPD_UPD_GS0_TRAN:                     // Transparency Display Enable, Key Value GS0
+        //     break;
+        // case EPD_UPD_GS1_TRAN:                     // // Transparency Display Enable, Key Value GS1
+        //     break;
+        // case EPD_UPD_GS2_TRAN:                     // // Transparency Display Enable, Key Value GS2
+        //     break;
+        // case EPD_UPD_GS3_TRAN                     // // Transparency Display Enable, Key Value GS3
+        //     break;
+
+
     }
     if (!manPow) 
         powerOff();
@@ -245,21 +309,34 @@ void PL_smallEPD::scrambleBuffer() {
         case 21:
             for (int y=0; y<146; y++) {                   // for each gateline...
                 for (int x=0; x<240/2; x++) {             // for each sourceline...
-                    drawPixel2(239-x, y, getPixel(x,y+1));
-                    drawPixel2(x, y, getPixel(x+120,y+1));
+                    drawPixel2(239-x, y, getPixel(x,y));
+                    drawPixel2(x, y, getPixel(x+120,y));
                 }
             }
             break;
         case 31:
-            for (int y=0; y<_height; y++) {               // for each gateline...
+          //  original from aruidno
+        //     for (int y=0; y<_height; y++) {               // for each gateline...
+        //         //scrambleline=
+        //         for (int x=0; x<_width; x++) {            // for each sourceline...
+        //             if (x%2)                                    // if x = 1, 3, 5..
+        //                 drawPixel2((x-1)/2, y+1, getPixel(x,y));
+        //             else
+        //                 drawPixel2(_width/2+x/2, y, getPixel(x,y));
+        //         }
+        //    }
+         for (int y=0; y<156; y++) {               // for each gateline... _height = 156; 
                 //scrambleline=
-                for (int x=0; x<_width; x++) {            // for each sourceline...
-                    if (x%2)                                    // if x = 1, 3, 5..
-                        drawPixel2((x-1)/2, y+1, getPixel(x,y));
-                    else
-                        drawPixel2(_width/2+x/2, y, getPixel(x,y));
+                for (int x=0; x <74; x++) {            // for each sourceline... x < 74;
+                                                   
+                        drawPixel2(x * 2 ,  y, getPixel(x + 74 ,y));
+                   
+                        drawPixel2(x * 2 + 1, y, getPixel(x,y));
                 }
-            }
+           }
+            break;
+            default:
+            break;
     }
 }
 
@@ -273,7 +350,8 @@ void PL_smallEPD::setRotation(uint8_t o) {
         nextline = _height/4;             //Landscape mode (default)
         switch (_EPDsize) {
             case 11:
-                writeRegister(EPD_DATENTRYMODE, 0x07, -1, -1, -1); 
+                writeRegister(EPD_DATENTRYMODE, 0x02, -1, -1, -1); // according to MSP430 
+                //writeRegister(EPD_DATENTRYMODE, 0x07, -1, -1, -1);  // original
                 break;
             case 14:
                 writeRegister(EPD_DATENTRYMODE, 0x02, -1, -1, -1); 
@@ -282,7 +360,8 @@ void PL_smallEPD::setRotation(uint8_t o) {
                 writeRegister(EPD_DATENTRYMODE, 0x20, -1, -1, -1);  
                 break;
             case 31:
-                writeRegister(EPD_DATENTRYMODE, 0x07, -1, -1, -1);  
+                writeRegister(EPD_DATENTRYMODE, 0x22, -1, -1, -1);   // according to MSP430 
+               // writeRegister(EPD_DATENTRYMODE, 0x07, -1, -1, -1); // original
         }
         
         _width  = _width + _height;
@@ -376,21 +455,43 @@ void PL_smallEPD::powerOff() {
 // ************************************************************************************
 // WRITEBUFFER - Sends the content of the memory buffer to the UC8156 driver IC.
 // ************************************************************************************
-void PL_smallEPD::writeBuffer(bool previous){
- 
-    writeRegister(EPD_PIXELACESSPOS, 0, 0, -1, -1); 
-    if (previous)
-        writeRegister(EPD_DATENTRYMODE, 0x30, -1, -1, -1);        //Previous buffer @UC8156
-    else
-        writeRegister(EPD_DATENTRYMODE, 0x20, -1, -1, -1);        
+void PL_smallEPD::writeBuffer(bool previous){   
+       switch (_EPDsize)
+       {
+         case 11:
+           if (previous)
+                  writeRegister(EPD_DATENTRYMODE, 0x12, -1, -1, -1);        //Previous buffer @UC8156
+            else
+                  writeRegister(EPD_DATENTRYMODE, 0x02, -1, -1, -1);        
+           break;
 
+
+
+       case 21:
+           if (previous)
+                  writeRegister(EPD_DATENTRYMODE, 0x30, -1, -1, -1);        //Previous buffer @UC8156
+            else
+                  writeRegister(EPD_DATENTRYMODE, 0x20, -1, -1, -1);        
+           break;
+        case 31:
+            if (previous)
+                  writeRegister(EPD_DATENTRYMODE, 0x32, -1, -1, -1);        //Previous buffer @UC8156
+            else
+                  writeRegister(EPD_DATENTRYMODE, 0x22, -1, -1, -1);            
+           break;
+       default:
+
+           break;
+       }
+            
     
     digitalWrite(cs, LOW);
     SPI.transfer(0x10);
-    if (_EPDsize==31 or _EPDsize==21)
+  if (_EPDsize==31 or _EPDsize==21)        // write scrambled buffer2 to SPI 
+  // if (_EPDsize==21)
         for (int i=0; i < _buffersize; i++) 
             SPI.transfer(buffer2[i]);
-    else
+    else                                        // write normal buffer1 to SPI
         for (int i=0; i < _buffersize; i++) 
             SPI.transfer(buffer[i]);
     digitalWrite(cs, HIGH);
@@ -400,7 +501,7 @@ void PL_smallEPD::writeBuffer(bool previous){
 
 // ************************************************************************************
 // WRITE REGISTER - Sets register ADDRESS to value VAL1 (optional: VAL2, VAL3, VAL4)
-// ************************************************************************************
+// ************************************************************************************s
 void PL_smallEPD::writeRegister(uint8_t address, int16_t val1, int16_t val2, 
     int16_t val3, int16_t val4) {
     digitalWrite(cs, LOW);
@@ -409,6 +510,19 @@ void PL_smallEPD::writeRegister(uint8_t address, int16_t val1, int16_t val2,
     if (val2!=-1) SPI.transfer((byte)val2);
     if (val3!=-1) SPI.transfer((byte)val3);
     if (val4!=-1) SPI.transfer((byte)val4);
+    digitalWrite(cs, HIGH);
+    waitForBusyInactive();
+}
+
+// ************************************************************************************
+// WRITE REGISTER CHAR ARRAY - Sets register ADDRESS to CHAR ARRAY
+// ************************************************************************************s
+
+void PL_smallEPD::writeRegisterChar(uint8_t address, int *charbuffer, uint8_t size) {
+    digitalWrite(cs, LOW);
+    SPI.transfer(address);
+ for (int i=0; i < size; i++) 
+            SPI.transfer( (byte)charbuffer[i]);
     digitalWrite(cs, HIGH);
     waitForBusyInactive();
 }
@@ -427,10 +541,24 @@ byte PL_smallEPD::readRegister(char address){
 }
 
 void PL_smallEPD::loadImg(const unsigned char *pic_name) {
-      for (uint16_t j=0; j < sizeof(buffer); j++) {     //144 bytes
-          buffer[j] = pgm_read_byte_near(pic_name + j);
+
+
+
+      for (uint16_t j=0; j < _buffersize; j++) {     //144 bytes
+          buffer[j] = pgm_read_byte_near(pic_name + 10 + j);
+          //buffer[j] = (byte)pic_name[10 + j];
       }
 }
+
+
+
+void PL_smallEPD::loadMAGICOWORD(const unsigned char *pic_name) {
+    MAGICWORD = (byte)pic_name[0];
+    display_color = MAGICWORD & 0x0F;
+    display_size = (MAGICWORD > 8) & 0x0F;
+    
+}
+
 // ************************************************************************************
 // GETEPDSIZE - Returns the size of the attached display diagonal, e.g. 11 is 
 // equivalent to to a 1.1" EPD, 21 correpsonds to 2.1" and 31 is equal to 3.1" EPD size
@@ -474,7 +602,260 @@ void PL_smallEPD::waitForBusyInactive(){
 // ************************************************************************************
 // DEEPSLEEP - Putting the UC8156 in deep sleep mode with less than 1µA current @3.3V.
 // Reset pin toggling needed to wakeup the driver IC again.
-// ************************************************************************************
+// ************************************************************************************s
 void PL_smallEPD::deepSleep(void) {
     writeRegister(0x21, 0xff, 0xff, 0xff, 0xff); 
 }
+
+
+
+// ************************************************************************************
+// showImage: show the image from h.file of greyscale image. 
+// updateMode is full update with waveform Type1 as default. 
+// updateMode Setting not finish
+// colorType for greyscale, tricolor red and tricolor yellow display
+// ************************************************************************************s
+
+void PL_smallEPD::showImage(const unsigned char *pic_name, int updateMode, int colorType){
+
+    loadMAGICOWORD(pic_name);
+    colorType = display_color;
+
+    switch(colorType)
+    {
+        case COLORTYPE_GREY:
+               loadImg(pic_name);
+               update(updateMode);
+        break;
+
+        case COLORTYPE_RED:
+
+               colorRed(pic_name, updateMode);
+             
+        break;
+
+        case COLORTYPE_YELLOW:
+               colorYellow(pic_name, updateMode);
+        
+        break;
+        // default:
+        //        loadImg(pic_name);
+        //        update(updateMode);
+        //        break;
+
+    } // 
+}
+
+
+void PL_smallEPD::waveformTypeSetting(int waveform_type) { 
+    writeRegister(EPD_PROGRAMMTP, (byte)waveform_type, -1, -1, -1);
+}
+
+
+
+void PL_smallEPD::colorRed(const unsigned char *pic_name, int updateMode) { 
+   
+    byte uc_vcom; 
+    uc_vcom = readRegister(EPD_VCOMDCSETTING);
+    int uc_vcom_ori  = (int)(uc_vcom * 30);
+    int uc_vcom_set = 4800;   // default: 5800
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    int i;
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(updateMode);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(updateMode);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(updateMode);
+    }
+
+                                            
+    for(i = 0; i< 5; i++)
+    {
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0x00, -1, -1);
+        setVcom(uc_vcom_set);        
+
+        int j;
+        for(j = 0; j < 8; j++)
+        {
+          clear(EPD_WHITE);
+          update(updateMode);
+        }
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0xff, -1, -1);
+        setVcom(uc_vcom_ori); 
+
+        clear(EPD_BLACK);
+        update(updateMode);
+    }
+
+
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0x00, -1, -1);
+        setVcom(uc_vcom_set);        
+
+      
+        for(i = 0; i < 8; i++)
+        {
+          clear(EPD_WHITE);
+          update(updateMode);
+        }
+
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0xff, -1, -1);
+        setVcom(uc_vcom_ori); 
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+
+
+
+        loadImg(pic_name);
+        for(i = 0; i < 4; i++)
+        {
+          update(updateMode);
+        }
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);
+        for(i = 0; i < 2; i++)
+        {
+          update(updateMode);
+        }
+
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+        invert();
+        for(i = 0; i < 4; i++)
+        {
+          update(updateMode);
+        }
+
+    
+}
+
+
+void PL_smallEPD::colorYellow(const unsigned char *pic_name, int updateMode) { 
+  
+    const int vcom_yellow = 0;
+    byte uc_vcom; 
+    uc_vcom = readRegister(EPD_VCOMDCSETTING);
+    int uc_vcom_ori  = (int)(uc_vcom * 30);
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+    int i;
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_WHITE);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type2
+
+    for(i = 0; i< 2; i++)
+    {
+        clear(EPD_WHITE);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type2
+
+    for(i = 0; i< 2; i++)
+    {
+        clear(EPD_BLACK);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+
+    setVcom(uc_vcom_ori); 
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+
+    for(i = 0; i< 8; i++)
+    {
+        clear(EPD_BLACK);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+    }
+    writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0x66, -1, -1);
+
+
+ for(i = 0; i< 5; i++)
+    {
+        int j;
+        setVcom(vcom_yellow); 
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type2
+        for(j = 0; j < 8; j++)
+        {
+         clear(EPD_LGRAY);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+         update(updateMode);
+        }
+        setVcom(uc_vcom_ori); 
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+        clear(EPD_BLACK);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+        update(updateMode);
+
+    }
+
+        setVcom(vcom_yellow); 
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type2
+        for(i = 0; i < 8; i++)
+        {
+         clear(EPD_LGRAY);      // EPD_WHITE: GL15,  EPD_BLACK: GL0
+         update(updateMode);
+        }
+        setVcom(uc_vcom_ori);
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+
+
+        for(i = 0; i < 10; i++)
+        {
+           loadImg(pic_name); 
+          update(updateMode);
+        }
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type2
+        for(i = 0; i < 3; i++)
+        {
+          loadImg(pic_name);
+          update(updateMode);
+        }
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);    // Waveform type1
+
+        for(i = 0; i <20; i++)
+        {
+          loadImg(pic_name);
+          invert();
+          update(updateMode);
+        }
+
+}
+
+
+
+
+
+
+
+
+
+void PL_smallEPD::setVcom(int vcom){
+int Vcom_register_value = (float)vcom/(float)30.0;
+ writeRegister(EPD_VCOMDCSETTING, (byte)(Vcom_register_value), (byte)((Vcom_register_value>>8)&0x03) , -1, -1);        
+} 
