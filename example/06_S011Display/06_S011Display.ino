@@ -6,7 +6,7 @@
 
 #include "a_PL_148x70pxl_display.h"            // Imported image (as bytestream) from PL Image Inverter tool 
 #include "VerticalGreyScale.h"            // Imported image (as bytestream) from PL Image Inverter tool 
-#include "Test2.h"            // Imported image (as bytestream) from PL Image Inverter tool 
+
 
 #define EPD_RST     12
 #define EPD_BUSY    9
@@ -30,21 +30,9 @@ void setup() {
     delay(2000);
     epd.begin(EPD_BLACK);           // EPD initialisation & ClearScreen
     epd.showImage(a_PL_148x70pxl_display);     // Load image byte stream and trigger an update    
- //   epd.begin(EPD_WHITE);      
+    
 }
 
 void loop() {      
-//      epd.begin(EPD_BLACK);           // EPD initialisation & ClearScreen
-   //  epd.showImage(tricolor_red, EPD_UPD_4GL_FULL, COLORTYPE_RED);     // Load image byte stream and trigger an update
-//    delay(5000);
- //epd.showImage(inch_Lectum_from_DMA_change);     // Load image byte stream and trigger an update
-
-/*    epd.showImage(Test1);     // Load image byte stream and trigger an update
-     delay(5000);
-     epd.clearScreen(EPD_BLACK);     // ClearScreen
-     epd.showImage(Test2);     // Load image byte stream and trigger an update   
-     delay(5000);
-     epd.clearScreen(EPD_BLACK);     // ClearScreen
-*/
  
 }
