@@ -12,7 +12,7 @@ and open source hardware by purchasing this product @Plasticlogic
 #ifndef PL_smallLegio_h
 #define PL_smallLegio_h
 
-#include <PL_smallEPD.h>
+#include "PL_smallEPD.h"
 #include <Adafruit_GFX.h> 
 
 #define EPD_YELLOW  0x04

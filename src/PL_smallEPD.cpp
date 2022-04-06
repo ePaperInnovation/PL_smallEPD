@@ -658,7 +658,7 @@ void PL_smallEPD::colorRed(const unsigned char *pic_name, int updateMode) {
     byte uc_vcom; 
     uc_vcom = readRegister(EPD_VCOMDCSETTING);
     int uc_vcom_ori  = (int)(uc_vcom * 30);
-    int uc_vcom_set = 4800;   // default: 5800
+    int uc_vcom_set = 4600;   // default: 5800
     writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
     int i;
     for(i = 0; i< 4; i++)
@@ -740,6 +740,112 @@ void PL_smallEPD::colorRed(const unsigned char *pic_name, int updateMode) {
 
     
 }
+
+void PL_smallEPD::colorRed_clear() { 
+   
+    byte uc_vcom; 
+    uc_vcom = readRegister(EPD_VCOMDCSETTING);
+    int uc_vcom_ori  = (int)(uc_vcom * 30);
+    int uc_vcom_set = 4600;   // default: 5800
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    int i;
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+/*                                         
+    for(i = 0; i< 5; i++)
+    {
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0x00, -1, -1);
+        setVcom(uc_vcom_set);        
+
+        int j;
+        for(j = 0; j < 8; j++)
+        {
+          clear(EPD_WHITE);
+          update(EPD_UPD_4GL_FULL);
+        }
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0xff, -1, -1);
+        setVcom(uc_vcom_ori); 
+
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0x00, -1, -1);
+        setVcom(uc_vcom_set);        
+
+      
+        for(i = 0; i < 8; i++)
+        {
+          clear(EPD_WHITE);
+          update(EPD_UPD_4GL_FULL);
+        }
+
+
+        writeRegister(EPD_DRIVERVOLTAGE, 0x25, 0xff, -1, -1);
+        setVcom(uc_vcom_ori); 
+        writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+
+
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType2_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 2; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+
+    writeRegisterChar(EPD_WAVEFORMSETTING, waveformType1_buffer, WAVEFORM_TRICOLOR_LENGTH);
+    for(i = 0; i< 4; i++)
+    {
+        clear(EPD_BLACK);
+        update(EPD_UPD_4GL_FULL);
+    }
+
+*/
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void PL_smallEPD::colorYellow(const unsigned char *pic_name, int updateMode) { 

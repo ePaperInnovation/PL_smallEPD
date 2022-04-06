@@ -116,6 +116,7 @@ public:
     void loadMAGICOWORD(const unsigned char *pic_name);
     void waveformTypeSetting(int waveform_type); 
     void colorRed(const unsigned char *pic_name, int updateMode);
+    void colorRed_clear();
     void colorYellow(const unsigned char *pic_name, int updateMode);
     void setVcom(int vcom);
     void writeRegisterChar(uint8_t address, int *charbuffer, uint8_t size);
